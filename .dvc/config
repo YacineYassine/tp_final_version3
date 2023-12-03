@@ -1,5 +1,6 @@
 [core]
-    remote = mondataremote
-['remote "mondataremote"']
+    remote = my_remote
+['remote "my_remote"']
     url = gdrive://1akqiNSU75Kgzmvf93TP1SjgSaBAtdEL8
-    gdrive_acknowledge_abuse = true
+    gdrive_use_service_account = true
+    gdrive_service_account_user_email='abbaoui.yacine2016@gmail.com'
