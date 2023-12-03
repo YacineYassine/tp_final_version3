@@ -22,7 +22,7 @@ jobs:
   
           - name: Pull data with DVC
           -env:
-            GDRIVE_CREDENTIALS_DATA: ${{ secrets.YOUR_REPO_SECRET_NAME }}
+            GDRIVE_CREDENTIALS_DATA: ${{ secrets.MY_SECRET }}
           run: |
             dvc push
 
