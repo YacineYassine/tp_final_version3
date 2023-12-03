@@ -1,6 +1,6 @@
 [core]
     remote = my_remote
 ['remote "my_remote"']
-    url = gdrive://1akqiNSU75Kgzmvf93TP1SjgSaBAtdEL8
+    url = gdrive://1n30_idir0vZLQQWNf8PrY_JRWR4e6B5V
     gdrive_use_service_account = true
-    gdrive_service_account_user_email='abbaoui.yacine2016@gmail.com'
+    gdrive_service_account_user_email='dvc-service@my-project-dvc-tracking.iam.gserviceaccount.com'
