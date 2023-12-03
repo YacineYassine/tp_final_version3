@@ -1,0 +1,5 @@
+[core]
+    remote = mondataremote
+['remote "mondataremote"']
+    url = gdrive://1akqiNSU75Kgzmvf93TP1SjgSaBAtdEL8
+    gdrive_acknowledge_abuse = true
