@@ -1,17 +1,19 @@
 import os
 import wget
 import zipfile
+import gdown
 
-# Download the zipped dataset
-url = 'https://storage.googleapis.com/trainingdata-mlops/data.zip'
+# Download the zipped dataset 
+# Remplacez 'your_file_id' par l'ID du fichier Google Drive que vous souhaitez télécharger
+file_id = '1Mw4RsXcSd54oojfsR7aAFF5Kdiyf04Tt'
+
+# Obtenez le lien de téléchargement direct à partir de l'ID du fichier
+url = f'https://drive.google.com/uc?id={file_id}'
 zip_name = "data.zip"
-wget.download(url, zip_name)
-
-
-import os
-#out_image = 'out_005.png'
-#url = 'http://mangadoom.co/wp-content/manga/5170/886/005.png'
-os.system("wget -O {0} {1}".format(zip_name, url))
+ 
+ 
+# Téléchargez le fichier en utilisant gdown
+gdown.download(url, zip_name, quiet=False)
 
 
 # Unzip it and standardize the .csv filename
@@ -19,4 +21,5 @@ with zipfile.ZipFile(zip_name, "r") as zip_ref:
 	zip_ref.extractall()
 
 os.remove(zip_name)
-print('\nAll files are being extracted.')
+print('\nAll files are being extracted.') 
+

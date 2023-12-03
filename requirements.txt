@@ -1,6 +1,7 @@
 numpy
 pandas
-sklearn
+scikit-learn
 matplotlib
 seaborn
 wget
+gdown
