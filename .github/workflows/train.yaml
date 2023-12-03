@@ -17,9 +17,14 @@ jobs:
           # Your ML workflow goes here
           pip install -r requirements.txt
           dvc repro
-          
-          echo "##push to ggole drive"
-          dvc push
+
+          - uses: iterative/setup-dvc@v1
+  
+          - name: Pull data with DVC
+          -env:
+            GDRIVE_CREDENTIALS_DATA: ${{ secrets.YOUR_REPO_SECRET_NAME }}
+          run: |
+            dvc push
 
           
           git fetch --prune
