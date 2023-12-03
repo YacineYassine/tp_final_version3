@@ -17,7 +17,9 @@ jobs:
           # Your ML workflow goes here
           pip install -r requirements.txt
           dvc repro
-
+          
+          echo "##push to ggole drive"
+          dvc push
 
           
           git fetch --prune
@@ -26,7 +28,8 @@ jobs:
           
           # Add a figure into report
           echo "## ROC Graph for the model"
-          cml-publish ROC.png --md >> report.md
+          #cml-publish ROC.png --md >> report.md 
+          cml-send-cooment ROC.png --md >> report.md 
           
           cml-send-comment report.md
 
