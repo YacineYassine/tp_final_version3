@@ -1,4 +1,4 @@
-name: tp a 57 pipeline
+name: model-supervisé RL
 on: [push]
 jobs:
   run:
@@ -6,61 +6,42 @@ jobs:
     container: docker://dvcorg/cml-py3:latest
     steps:
       - uses: actions/checkout@v2
-      - name: 'Train my model'
+      - name: cml_run
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
+          GDRIVE_CREDENTIALS_DATA: ${{ secrets.MY_SECRET }}
+          gdrive_service_account_json_file_path: ${{ secrets.MY_SECRET }}
         run: |
-
           # Your ML workflow goes here
           pip install -r requirements.txt
-          #dvc repro
-
-      - name: Set up Google Drive credentials
-        run: echo "$GOOGLE_DRIVE_CREDENTIALS" > google-drive-credentials.json
-        env:
-          GOOGLE_DRIVE_CREDENTIALS: ${{ secrets.GOOGLE_DRIVE_CREDENTIALS }}
-
-      - name: Authenticate DVC with Google Drive
-        run: |
-          echo '{
-                  "type": "service_account",
-                  "project_id": "my-project-dvc-tracking",
-                  "private_key_id": "7e94d17a3902f7abdf4fe4098b3f90a2fbef7fe5",
-                  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDCp5CpB5FCI2Rn\nJukg553Q3VTBdV4aW5ekMYfOgJRZyYUQ859xjGNW5HpEWMogCIRTQIyx7RZriJzx\nmfoi99+tYPaR0P2knQLSb4zGTk2X8C9Q09d8VdYxkUDU3yxjNircg0hcJXCCD45K\ntapPPqY5LDtPmdGB5xCgYX64tur9GcqaRBaIerEMq4dpgkxfRogKdMwJYyiO7rRn\nfLiEh9A7pX+qcqSephRNQiwqJKAFvzSa32XKPmUIeoJoTfrG3huI9oGXuZ8SwXeb\nwyrGeYpGAR0ehb0hqsGKNyWmdWq1k/HY55H7myhGtxsnE0heAOasBi5d6v/SfgY+\nh1NbTKqZAgMBAAECggEACKU2FtfL8w7M2wr+oDRBTWFDLit3ED8gq0163WhXDmzV\noOTdIEcus1GG/6mc4pLWQ7dSeGWSERkadV2UH0D4mYP8t4m7djf2A+Ap9bXNGvIz\nO8kI4VATqRRtN3cpCsgBW9Vl3ZfZGSG1PWq3o3jiG5h0Eus/Q6B+W80wumX/ZlnO\nxDKcAjBimlmV1z5oYvfqzhPWHMw6l+56DgvmeA7IWkieK4N+3MMfzcZ9MT3G8AbK\nmXeSPHMsubT01A8vA8WYxJ5NWHWXMxN/XSMThHBZAR7Lh+sfmvaQP/OvHtT7NpvW\nLHCQCtrRAp4IdhrAWkG6+NSYOAOy+MjjIK41M3ylAQKBgQDweYNSr1Sc0gWRUk3+\nfHPC06WdbWgipMhkb2pBPrFViPSWKyIMlJ6pq0FCX+yJKI3E7NrIsFMRr3HuOHMe\nJf/vB62owDKvCljCvrT4JKsAYcUG2v5Wp8bSpUk/wrCpcvEI/XlyYNknxEihJA4A\ni9lhb1QCcvLzEDA4i4MzZ+S0GQKBgQDPOMCSLJ9bsIzsO7nBtHJw9Wf6a9eLfxCG\nJOLzHCCg/ozmlVqLCz1NT3V4u2yaA7eMdem6JRMhI4tE67b4xrhwmm6aSVyeqiGl\n91XzhtcNguRSW9VdoSrHsHN3KNJ+PA7G+N9h52skM3LjoKFJDS70PxY1zXgP4fTO\nVLnzFEp6gQKBgQC/6zqzstqEjdmDsXwtroV06BU1HywM+hY0kfbrO22sJjGN5760\n66f1IYhjwMq2bHc4ww+ZO6AQbUUwKj01wn4P9sDR/RJ2QHu2cR1dLWaMV3s3jW+P\nGTfExcU/7dGwatuToThb4I9u/Wg5sty58uL6sC8MBVGAS1swxadgT3pngQKBgFk/\ndiD+uvvAhFFSP+TflNJ1v3ypacIYzcMYq+5M1PjB6Wl+NergwlxDtrJy9ok2xJzo\nQ+v5/80sA9WBN+LZo6JLwQsOQafMWoWiixBBqOmW0ENwberPeR9cLb7KhC3+K9ci\nZQNDqm+DAR5slkpiNTDY4vX1MpqUlN0wvI2m1ZUBAoGAT+Tx/XUqMXdGTXnrah5V\nLm1eg4mY8CGY3COp5+Q8Kb4pyGdmc3//5by74VMqbcGTTlXWbAn+X6iQLm1TvIhQ\nxQEgT5AcPF6sL7HPYF318Bv6h9xMF5zzC2uz7maBCSyUoeKZFv5TxQjTxo1BUpDc\nPphuy7P2PiIu8gLuo+8LBWk=\n-----END PRIVATE KEY-----\n",
-                  "client_email": "dvc-service@my-project-dvc-tracking.iam.gserviceaccount.com",
-                  "client_id": "116934618665658252148",
-                  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-                  "token_uri": "https://oauth2.googleapis.com/token",
-                  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-                  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/dvc-service%40my-project-dvc-tracking.iam.gserviceaccount.com",
-                  "universe_domain": "googleapis.com"
-                } ' > file.json
-          dvc remote modify --local my_remote gdrive_user_email "dvc-service@my-project-dvc-tracking.iam.gserviceaccount.com"
-          dvc remote modify --local my_remote gdrive_service_account "file.json"
-        env:
-          GOOGLE_DRIVE_CREDENTIALS: ${{ secrets.MY_SECRET}}
-  
-      - name: DVC Repro
-        run: dvc repro
-
-      - name: DVC Push to Google Drive
-        run: dvc push
-            
-      - name: push to github 
-        run: |
-          git config --global user.email "abbaoui.yacine2016@gmail.com"
-          git config --global user.name "YacineYassine"
-        
-          git fetch --prune
+          dvc repro
           
-          dvc metrics diff --show-md master > report.md
+          git fetch --prune
+          dvc metrics diff --show-md main > report.md
+          
+          # Add figure to the report
+          #echo "## Validating results by region"
+          #cml-publish metrics.json --md >> report.md
+          #echo "## Metriques:" >> report.md
+          #cat metrics.json >> report.md
+          
+          cml-send-cooment ROC.png --md >> report.md 
+          cml-send-comment report.md  
+
+
+
+
+        
+          #git config --global user.email "abbaoui.yacine2016@gmail.com"
+          #git config --global user.name "YacineYassine"
+        
           
           # Add a figure into report
-          echo "## ROC Graph for the model"
-          #cml-publish ROC.png --md >> report.md 
-          cml-send-cooment ROC.png --md >> report.md 
+          #echo "## ROC Graph for the model"
+          ##cml-publish ROC.png --md >> report.md 
+          #cml-send-cooment ROC.png --md >> report.md 
           
-          cml-send-comment report.md
+          #cml-send-comment report.md
 
 
 
