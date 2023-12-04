@@ -2,54 +2,35 @@ name: model-training
 on: [push] # Trigger - push event
 jobs:
   run:
-  runs-on: [ubuntu-latest]
-  #container: docker://dvcorg/cml:0-dvc2-base1
-  steps:
-    - uses: actions/checkout@v2
-    - uses: iterative/setup-cml@v1
-    - name: Model Diff
-  env:
-    REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    GDRIVE_CREDENTIALS_DATA: ${{ secrets.MY_SECRET }}
-    run: |
-      pip install -r requirements.txt
-      pip install dvc[gdrive]
-      dvc remote modify filterout --local gdrive_service_account_json_file_path /dev/null
-      dvc pull -r filterout --verbose
-      dvc repro
-
-
-name: model-supervisé RL
-on: [push]
-jobs:
-  run:
     runs-on: [ubuntu-latest]
-    container: docker://dvcorg/cml-py3:latest
+    #container: docker://dvcorg/cml:0-dvc2-base1
     steps:
-      - uses: iterative/setup-dvc@v1
-      - name: Pull data with DVC
-        env:
-          GDRIVE_CREDENTIALS_DATA: ${{ secrets.MY_SECRET }}
-        run: |
-          # Your ML workflow goes here
-          pip install -r requirements.txt
-          dvc pull
-          
       - uses: actions/checkout@v2
-      - name: cml_run 
-          git fetch --prune
-          dvc metrics diff --show-md master > report.md
-          
-          # Add figure to the report
-          #echo "## Validating results by region"
-          #cml-publish metrics.json --md >> report.md
-          #echo "## Metriques:" >> report.md
-          #cat metrics.json >> report.md
-          
-          #cml-send-cooment ROC.png --md >> report.md 
-          cml-send-comment report.md  
-
-
+      - uses: iterative/setup-cml@v1
+      - name: Model Diff
+    env:
+      REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GDRIVE_CREDENTIALS_DATA: ${{ secrets.MY_SECRET }}
+      run: |
+        pip install -r requirements.txt
+        pip install dvc[gdrive]
+        dvc remote modify filterout --local gdrive_service_account_json_file_path /dev/null
+        dvc pull -r filterout --verbose
+        dvc repro
+        
+        git fetch --prune
+        dvc metrics diff --show-md master > report.md
+            
+            # Add figure to the report
+            #echo "## Validating results by region"
+            #cml-publish metrics.json --md >> report.md
+            #echo "## Metriques:" >> report.md
+            #cat metrics.json >> report.md
+            
+            #cml-send-cooment ROC.png --md >> report.md 
+        cml-send-comment report.md  
+  
+  
 
 
         
