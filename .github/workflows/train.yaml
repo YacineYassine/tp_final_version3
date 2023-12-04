@@ -5,22 +5,21 @@ jobs:
     runs-on: [ubuntu-latest]
     container: docker://dvcorg/cml-py3:latest
     steps:
+      - uses: iterative/setup-dvc@v1
+      - name: Pull data with DVC
+        env:
+          GDRIVE_CREDENTIALS_DATA: ${{ secrets.MY_SECRET }}
+        run: |
+          # Your ML workflow goes here
+          pip install -r requirements.txt
+          dvc pull
+          
       - uses: actions/checkout@v2
       - name: cml_run
         env:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          GDRIVE_CREDENTIALS_DATA: ${{ secrets.MY_SECRET }} 
-          gdrive_service_account_json_file_path: my-project-dvc-tracking-7e94d17a3902.json
-          
+          repo_token: ${{ secrets.GITHUB_TOKEN }} 
         run: | 
-         
-          # Your ML workflow goes here
-          pip install -r requirements.txt
           
-          dvc repro
-          dvc push
-          #ERROR: failed to push data to the cloud - To use service account, set `gdrive_service_account_json_file_path`, and optionally`gdrive_service_account_user_email` in DVC config
-
           git fetch --prune
           dvc metrics diff --show-md master > report.md
           
