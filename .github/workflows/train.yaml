@@ -25,7 +25,7 @@ jobs:
           #echo "## Metriques:" >> report.md
           #cat metrics.json >> report.md
           
-          cml-send-cooment ROC.png --md >> report.md 
+          cml-send-comment ROC.png --md >> report.md 
           cml-send-comment report.md  
 
 
