@@ -30,7 +30,7 @@ z_scaled = min_max_scaler.fit_transform(z)
 x = pd.DataFrame(z_scaled)
 
 # Split dataset into train and test sets
-X_train, X_test, y_train, y_test = train_test_split(x, y, test_size = 0.11, random_state = 88)
+X_train, X_test, y_train, y_test = train_test_split(x, y, test_size = 0.20, random_state = 80)
 
 # - - - - APPLY CLASSIFIERS -->
 # ::: Apply Dummy Classifier
