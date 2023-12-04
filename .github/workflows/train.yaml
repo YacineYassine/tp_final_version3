@@ -6,8 +6,8 @@ jobs:
     #container: docker://dvcorg/cml:0-dvc2-base1
     steps:
       - uses: actions/checkout@v2
-      - uses: iterative/setup-cml@v1
       - name: Model Diff
+        uses: iterative/setup-cml@v1
     env:
         REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GDRIVE_CREDENTIALS_DATA: ${{ secrets.MY_SECRET }}
