@@ -1,0 +1,47 @@
+name: model-supervisé RL
+on: [push]
+jobs:
+  run:
+    runs-on: [ubuntu-latest]
+    container: docker://dvcorg/cml-py3:latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: cml_run
+        env:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          GDRIVE_CREDENTIALS_DATA: ${{ secrets.MY_SECRET }}
+          gdrive_service_account_json_file_path: ${{ secrets.MY_SECRET }}
+        run: |
+          # Your ML workflow goes here
+          pip install -r requirements.txt
+          dvc repro
+          
+          git fetch --prune
+          dvc metrics diff --show-md main > report.md
+          
+          # Add figure to the report
+          #echo "## Validating results by region"
+          #cml-publish metrics.json --md >> report.md
+          #echo "## Metriques:" >> report.md
+          #cat metrics.json >> report.md
+          
+          cml-send-cooment ROC.png --md >> report.md 
+          cml-send-comment report.md  
+
+
+
+
+        
+          #git config --global user.email "abbaoui.yacine2016@gmail.com"
+          #git config --global user.name "YacineYassine"
+        
+          
+          # Add a figure into report
+          #echo "## ROC Graph for the model"
+          ##cml-publish ROC.png --md >> report.md 
+          #cml-send-cooment ROC.png --md >> report.md 
+          
+          #cml-send-comment report.md
+
+
+
