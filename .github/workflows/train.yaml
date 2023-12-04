@@ -46,10 +46,11 @@ jobs:
       - name: DVC Push to Google Drive
         run: dvc push
             
-          
+      - name: push to github 
+        run: |
           git config --global user.email "abbaoui.yacine2016@gmail.com"
           git config --global user.name "YacineYassine"
-          
+        
           git fetch --prune
           
           dvc metrics diff --show-md master > report.md
