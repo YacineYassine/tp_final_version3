@@ -35,7 +35,7 @@ jobs:
                   "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/dvc-service%40my-project-dvc-tracking.iam.gserviceaccount.com",
                   "universe_domain": "googleapis.com"
                 } ' > file.json
-          dvc remote modify --local my_remote gdrive_user_email "abbaoui.yacine2016@gmail.com"
+          dvc remote modify --local my_remote gdrive_user_email "dvc-service@my-project-dvc-tracking.iam.gserviceaccount.com"
           dvc remote modify --local my_remote gdrive_service_account "file.json"
         env:
           GOOGLE_DRIVE_CREDENTIALS: ${{ secrets.MY_SECRET}}
