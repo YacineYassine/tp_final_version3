@@ -12,7 +12,7 @@ jobs:
       - name: cml_run
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          #GDRIVE_CREDENTIALS_DATA: ${{ secrets.MY_SECRET }}
+          GDRIVE_CREDENTIALS_DATA: ${{ secrets.MY_SECRET }}
         run: |
           # Your ML workflow goes here
           
